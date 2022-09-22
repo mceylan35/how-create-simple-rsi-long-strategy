@@ -17,9 +17,9 @@ rsiIndicator = ta.rsi(close,
 
 // User Interface Command
 crossUnderLevel = input.int(defval = 35, 
-     "Oversold level")
+     title = "Oversold level")
 crossOverLevel = input.int(defval = 70, 
-     "Overbought level")
+     title = "Overbought level")
 
 // Indicator Signal
 strategyLong = ta.crossunder(rsiIndicator, 
