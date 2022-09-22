@@ -1,0 +1,65 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © thequantscience
+
+//@version=5
+strategy(" Simple Strategy RSI Long (Buy & Sell) - Developed By The Quant Science™ ", 
+     overlay = true, 
+     default_qty_type = strategy.percent_of_equity, 
+     default_qty_value = 100,
+     currency = currency.EUR, 
+     initial_capital = 1000, 
+     commission_type = strategy.commission.percent, 
+     commission_value = 0.03)
+
+// RSI Indicator
+rsiIndicator = ta.rsi(close, 
+     14)
+
+// User Interface Command
+crossUnderLevel = input.int(defval = 35, 
+     "Oversold level")
+crossOverLevel = input.int(defval = 70, 
+     "Overbought level")
+
+// Indicator Signal
+strategyLong = ta.crossunder(rsiIndicator, 
+     crossUnderLevel) and barstate.isconfirmed
+
+// Indicator Signal
+strategyClosing = ta.crossunder(rsiIndicator, 
+     crossOverLevel) and barstate.isconfirmed
+
+// Entry price 
+entryPrice = ta.valuewhen(strategyLong, 
+     close, 
+         0)
+
+// Exit price 
+exitPrice = ta.valuewhen(strategyClosing, 
+     close, 
+         0)
+
+// Zero trade balance
+zeroTrade = strategy.opentrades == 0
+
+// Trading function
+if strategyLong and zeroTrade
+    strategy.order(id = "LONG", 
+         direction = strategy.long,
+             limit = entryPrice)
+    strategy.entry(id = "LONG", 
+         direction = strategy.long)
+
+if strategyClosing
+    strategy.exit(id = "CLOSE_LONG",
+         from_entry = "LONG",
+             stop = exitPrice)
+    
+//------------------- DISCLAIMER ----------------------
+
+// Use this script for backtesting and market research only. 
+// Algorithmic trading involves high risks.
+// The Quant Science™ takes no responsibility for your personal use.
+// Be responsible ! 
+
+//-----------------------------------------------------
