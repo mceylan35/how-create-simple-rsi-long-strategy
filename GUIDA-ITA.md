@@ -8,8 +8,7 @@ You can find quickly configuration tutorial on YouTube for this algo, here: link
 
 1. Definiamo la strategia
 
-`
-//@version=5
+`//@version=5
 strategy(" Simple Strategy RSI Long (Buy & Sell) - Developed By The Quant Science™ ", 
      overlay = true, 
      default_qty_type = strategy.percent_of_equity, 
@@ -18,5 +17,5 @@ strategy(" Simple Strategy RSI Long (Buy & Sell) - Developed By The Quant Scienc
      initial_capital = 1000, 
      commission_type = strategy.commission.percent, 
      commission_value = 0.03)
-`
+     `
 
